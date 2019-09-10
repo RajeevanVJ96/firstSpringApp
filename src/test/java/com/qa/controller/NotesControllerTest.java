@@ -55,7 +55,7 @@ public class NotesControllerTest {
 
     @Test
     public void testGetNote(){
-        
+
         Notes note = new Notes();
         note.setId(1l);
         note.setDescription("blah");
@@ -64,5 +64,32 @@ public class NotesControllerTest {
         when(repository.findOne(1L)).thenReturn(note);
 
         assertEquals(notesController.getNotes(1L).getName(), "blah");
+    }
+
+    @Test
+    public void testAddNote(){
+
+        Notes note = new Notes();
+        note.setId(1L);
+        note.setDescription("blah");
+        note.setName("blah");
+
+        when(repository.saveAndFlush(note)).thenReturn(note);
+
+        assertEquals(notesController.addNotes(note).getName(), "blah");
+    }
+
+    @Test
+    public void testDelNotes(){
+
+        Notes existing;
+        Notes note = new Notes();
+        note.setId(1L);
+        note.setDescription("blah");
+        note.setName("blah");
+
+        when(repository.findOne(1L)).thenReturn(note);
+        repository.delete(1L);
+        assertEquals(notesController.delNotes(1L).getName(), "blah");
     }
 }
